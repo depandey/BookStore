@@ -1,0 +1,13 @@
+@(loginForm: Form[Application.Login])
+
+    @main{
+
+        @wflash()
+
+        <div class="col-lg-6">
+            <div class="well">
+            @login(null,loginForm)
+            </div>
+
+        </div>
+    }

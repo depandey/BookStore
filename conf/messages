@@ -1,0 +1,17 @@
+title=Book Store
+
+confirm=Confirmation
+email=Email
+userName=Full Name
+goback=Go Back
+logout=Logout
+password=Password
+error.technical=Technical Error, please Retry
+validate=Validate
+reset=Reset
+signin.signin=Sign In
+signin.your.email=Your email address
+signin.your.password=Your password
+signin.success=Success
+signin.failure=Failure
+token.list.title=Send Push Notification

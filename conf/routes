@@ -1,0 +1,19 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index()
+POST    /login                      controllers.Application.authenticate()
+PUT     /api/login                  controllers.Application.createDeviceToken()
+
+GET     /tokens                     controllers.Dashboard.listTokens(p:Int ?= 0, s ?= "device_type", o ?= "asc", f ?= "")
+
+GET   /create_push                 controllers.Dashboard.createPush()
+
+POST   /send_push                   controllers.Dashboard.sendPush(tokens:java.util.List[String])
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+    

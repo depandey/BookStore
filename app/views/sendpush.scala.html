@@ -1,0 +1,35 @@
+@(notificationForm: Form[PushNotification], devicetokens:Form[Dashboard.DeviceTokenForm])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@main {
+
+        <h3>Send Push Notification</h3>
+    @form(routes.Dashboard.sendPush(devicetokens.get().device_tokens), 'class -> "form") {
+
+        <div class="form-group col-lg-6 col-sm-10 col-xs-6">
+
+            @if(!devicetokens.get().device_tokens.isEmpty) {
+                @inputText(
+                    notificationForm("message"),
+                    'placeholder -> Messages("message..."),
+                    '_label -> "",
+                    '_help -> "",
+                    'class -> "form-control"
+                )
+
+                @textarea(
+                    notificationForm("message"),
+                    args = 'rows -> 3, 'cols -> 50
+                )
+            }
+
+        </div>
+        <div class="col-lg-8 col-sm-10 col-xs-10">
+        <button type="submit" class="btn btn-primary">Send</button> or
+            <a href="@routes.Dashboard.listTokens()" class="btn">Cancel</a>
+        </div>
+    }
+}
