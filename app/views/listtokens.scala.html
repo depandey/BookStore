@@ -1,13 +1,13 @@
-
 @import java.util
 @import helper._
+@import play.api.data
+@import play.api.libs.functional.syntax.toMonoidOps
 @(currentPage: com.avaje.ebean.PagedList[DeviceInfo], currentSortBy: String, currentOrder: String, currentFilter: String,
-        deviceTokenForm: Form[controllers.Dashboard.DeviceTokenForm],tokenMap: Map[DeviceInfo.DeviceTypeToken,Boolean])
-
+        deviceTokenForm: Form[controllers.Dashboard.DeviceTokenForm], tokenMap: Map[DeviceInfo.DeviceTypeToken, Boolean])
 @****************************************
-* Helper generating navigation links    *
+* Helper generating navigation links *
 ****************************************@
-@link(newPage:Int, newSortBy:String) = @{
+@link(newPage: Int, newSortBy: String) = @{
 
     var sortBy = currentSortBy
     var order = currentOrder
@@ -30,8 +30,10 @@
     @**********************************
     * Helper generating table headers *
     ***********************************@
-@header(key:String, title:String) = {
-    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+@header(key: String, title: String) = {
+    <th class="@key.replace(".", "_") header @if(currentSortBy == key) @{
+        if(currentOrder == "asc") "headerSortDown" else "headerSortUp"
+    }">
         <a href="@link(0, key)">@title</a>
     </th>
 }
@@ -58,9 +60,9 @@
             <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
         </form>
 
-@*
+        @*
         <a class="btn success" id="add" href="@routes.Dashboard.createPush()">Create Push Notification</a>
-*@
+        *@
 
     </div>
 
@@ -81,21 +83,24 @@
             <table class="computers zebra-striped">
                 <thead>
                     <tr>
+                        @header("createdon", "Created on")
                         @header("username", "User Name")
                         @header("role", "Role")
                         @header("deviceType", "Device")
                         @header("deviceToken", "Token")
-                        <th class="selectAll header"><a href="#">@checkboxes(deviceTokenForm("device_tokens"),
-                            label = "",
-                            checkboxMap = tokenMap,
-                            help = "Check zero or more tokens. (optional)",
-                            devicetoken = "selectAll")</a></th>
+                        <th class="selectAll header">
+                            <a href="#">
+                            @select(deviceTokenForm("selected"), options("selectAll" -> "All", "android" -> "Android", "ios" -> "Ios"), '_label -> "", '_default -> "", '_onClick -> "toggle(this)")
+                            </a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
 
                 @for(computer <- currentPage.getList) {
                     <tr>
+                        <td>@computer.createdon</td>
+
                         <td><a href="">@computer.username</a></td>
 
                         <td>@computer.role</td>
@@ -127,7 +132,7 @@
                     </li>
                 }
                 <li class="current">
-                    <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+                    <a>Displaying @currentPage.getDisplayXtoYofZ(" to ", " of ")</a>
                 </li>
                 @if(currentPage.hasNext) {
                     <li class="next">

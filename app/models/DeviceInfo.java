@@ -3,14 +3,13 @@ package models;
 
 import com.avaje.ebean.*;
 import controllers.Dashboard;
+import play.data.format.Formats;
 import play.libs.F;
 import play.mvc.QueryStringBindable;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -40,6 +39,9 @@ public class DeviceInfo extends Model {
 
     @Column(nullable = false, length = 20)
     public String role;
+
+    @Formats.DateTime(pattern = "yyyy-MM-dd")
+    public Date createdon;
 
     public DeviceInfo() {
     }
@@ -94,6 +96,17 @@ public class DeviceInfo extends Model {
         return tokenMap;
     }
 
+    public static List<DeviceTypeToken> getAllTokenAndType() {
+        List<DeviceTypeToken> tokens = new ArrayList<>();
+        List<DeviceInfo> list = DeviceInfo.find.all();
+        for (DeviceInfo info : list) {
+            DeviceTypeToken typeToken = new DeviceTypeToken();
+            typeToken.token = info.deviceToken;
+            typeToken.type = info.deviceType;
+            tokens.add(typeToken);
+        }
+        return tokens;
+    }
 
     public static PagedList<DeviceInfo> page(int page, int pageSize, String sortBy, String order, String filter) {
         //if(page==0){page=page+1;}

@@ -14,6 +14,11 @@ import views.html.*;
 import javax.inject.Inject;
 import static play.data.Form.form;
 
+import com.edulify.modules.geolocation.Geolocation;
+import com.edulify.modules.geolocation.GeolocationService;
+
+import java.util.Date;
+
 public class Application extends Controller {
 
 
@@ -29,6 +34,8 @@ public class Application extends Controller {
             routes.Application.index()
     );
 
+    @Inject
+    private GeolocationService geolocationService;
 
     public static Result GO_DASHBOARD = redirect(
             routes.Dashboard.listTokens(0, "username", "asc", "")
@@ -133,6 +140,7 @@ public class Application extends Controller {
         deviceInfo.deviceType = createTokenRequest.type;
         deviceInfo.username = createTokenRequest.username;
         deviceInfo.password = createTokenRequest.password;
+        deviceInfo.createdon = new Date();
         deviceInfo.role = role.name();//createTokenRequest.role;
         deviceInfo.save();
         return getResultAsJsonResponse("success", deviceInfo, "device registration successful");

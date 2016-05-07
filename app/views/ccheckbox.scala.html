@@ -1,0 +1,5 @@
+@(field: Field, name: String, isChecked: Boolean = false)
+<input id="@(field.name)" type="checkbox" name="@name" value="true"
+@if(isChecked){
+    checked = isChecked
+}>

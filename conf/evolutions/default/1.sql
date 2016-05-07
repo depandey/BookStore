@@ -10,6 +10,7 @@ create table device_info (
   username                  varchar(100),
   phone_number              varchar(255) not null,
   role                      varchar(20) not null,
+  createdon                 datetime(6),
   constraint pk_device_info primary key (id))
 ;
 

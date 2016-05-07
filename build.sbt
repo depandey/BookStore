@@ -14,13 +14,15 @@ libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "5.1.36",
   "commons-codec" % "commons-codec" % "1.8" force(),
   "com.google.code.gson" % "gson" % "2.6.2",
+  "com.edulify" %% "geolocation" % "2.0.0",
   filters
 )
 
 resolvers ++= Seq(
   "Apache" at "http://repo1.maven.org/maven2/",
   "jBCrypt Repository" at "http://repo1.maven.org/maven2/org/",
-  "Sonatype OSS Snasphots" at "http://oss.sonatype.org/content/repositories/snapshots"
+  "Sonatype OSS Snasphots" at "http://oss.sonatype.org/content/repositories/snapshots",
+  Resolver.url("Edulify Repository", url("https://edulify.github.io/modules/releases/"))(Resolver.ivyStylePatterns)
 )
 routesGenerator := InjectedRoutesGenerator
 
