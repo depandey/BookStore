@@ -80,45 +80,49 @@
                     <button id="submit" type="submit" value="Submit" class="btn success">Submit</button>
                 </div>
             </div>
-            <table class="computers zebra-striped">
-                <thead>
-                    <tr>
-                        @header("createdon", "Created on")
-                        @header("username", "User Name")
-                        @header("role", "Role")
-                        @header("deviceType", "Device")
-                        @header("deviceToken", "Token")
-                        <th class="selectAll header">
-                            <a href="#">
-                            @select(deviceTokenForm("selected"), options("selectAll" -> "All", "android" -> "Android", "ios" -> "Ios"), '_label -> "", '_default -> "", '_onClick -> "toggle(this)")
-                            </a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="table-responsive">
+                <table class="table zebra-striped computers" id="device-tokens">
+                    <thead>
+                        <tr>
+                            <th class="selectAll header">
+                                <a href="#">
+                                @select(deviceTokenForm("selected"), options("selectAll" -> "All", "android" -> "Android", "ios" -> "Ios"), '_label -> "", '_default -> "", '_onClick -> "toggle(this)")
+                                </a>
+                            </th>
+                            @header("username", "User Name")
+                            @header("role", "Role")
+                            @header("deviceType", "Device")
+                            @header("deviceToken", "Token")
+                            @header("createdon", "Created on")
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                @for(computer <- currentPage.getList) {
-                    <tr>
-                        <td>@computer.createdon</td>
+                    @for(computer <- currentPage.getList) {
+                        <tr>
+                            <td>@checkboxes(deviceTokenForm("device_tokens"),
+                                label = "",
+                                checkboxMap = tokenMap,
+                                help = "Check zero or more tokens. (optional)",
+                                devicetoken = computer.deviceToken)
+                            </td>
 
-                        <td><a href="">@computer.username</a></td>
+                            <td><a href="">@computer.username</a></td>
 
-                        <td>@computer.role</td>
+                            <td>@computer.role</td>
 
-                        <td>@computer.deviceType</td>
+                            <td>@computer.deviceType</td>
 
-                        <td>@computer.deviceToken</td>
+                            <td>@computer.deviceToken</td>
 
-                        <td>@checkboxes(deviceTokenForm("device_tokens"),
-                            label = "",
-                            checkboxMap = tokenMap,
-                            help = "Check zero or more tokens. (optional)",
-                            devicetoken = computer.deviceToken)</td>
-                    </tr>
-                }
+                            <td>@computer.createdon</td>
 
-                </tbody>
-            </table>
+                        </tr>
+                    }
+
+                    </tbody>
+                </table>
+            </div>
         }
         <div id="pagination" class="pagination">
             <ul>
